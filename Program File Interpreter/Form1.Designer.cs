@@ -79,7 +79,7 @@
             this.fuckclinton.Name = "fuckclinton";
             this.fuckclinton.Size = new System.Drawing.Size(887, 30);
             this.fuckclinton.TabIndex = 3;
-            this.fuckclinton.Text = "Fuck Clinton";
+            this.fuckclinton.Text = "Swaggy";
             this.fuckclinton.UseVisualStyleBackColor = true;
             this.fuckclinton.Click += new System.EventHandler(this.fuckclinton_Click);
             // 
