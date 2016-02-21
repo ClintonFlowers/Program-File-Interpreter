@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace Program_File_Interpreter
 {
-    public partial class Form1 : Form
+    public partial class InterpeterForm : Form
     {
 
         public List<string> operations = new List<string>();
 
-        public Form1()
+        public InterpeterForm()
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace Program_File_Interpreter
 
         }
 
-        private void loadthebitch_Click(object sender, EventArgs e)
+        private void loadFileButton_click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Text Files (.txt)|*.txt";
