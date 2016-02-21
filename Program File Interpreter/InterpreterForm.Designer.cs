@@ -32,7 +32,7 @@
             this.preParse = new System.Windows.Forms.RichTextBox();
             this.loadTextFile = new System.Windows.Forms.Button();
             this.postParse = new System.Windows.Forms.RichTextBox();
-            this.fuckclinton = new System.Windows.Forms.Button();
+            this.interpretButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // preParse
@@ -71,16 +71,16 @@
             // 
             // fuckclinton
             // 
-            this.fuckclinton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.fuckclinton.Location = new System.Drawing.Point(0, 322);
-            this.fuckclinton.Margin = new System.Windows.Forms.Padding(0, 0, 3, 3);
-            this.fuckclinton.MaximumSize = new System.Drawing.Size(887, 30);
-            this.fuckclinton.Name = "fuckclinton";
-            this.fuckclinton.Size = new System.Drawing.Size(887, 30);
-            this.fuckclinton.TabIndex = 3;
-            this.fuckclinton.Text = "Process Text";
-            this.fuckclinton.UseVisualStyleBackColor = true;
-            this.fuckclinton.Click += new System.EventHandler(this.interpretButton_click);
+            this.interpretButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.interpretButton.Location = new System.Drawing.Point(0, 322);
+            this.interpretButton.Margin = new System.Windows.Forms.Padding(0, 0, 3, 3);
+            this.interpretButton.MaximumSize = new System.Drawing.Size(887, 30);
+            this.interpretButton.Name = "fuckclinton";
+            this.interpretButton.Size = new System.Drawing.Size(887, 30);
+            this.interpretButton.TabIndex = 3;
+            this.interpretButton.Text = "Process Text";
+            this.interpretButton.UseVisualStyleBackColor = true;
+            this.interpretButton.Click += new System.EventHandler(this.interpretButton_click);
             // 
             // InterpreterForm
             // 
@@ -89,7 +89,7 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(887, 644);
             this.Controls.Add(this.postParse);
-            this.Controls.Add(this.fuckclinton);
+            this.Controls.Add(this.interpretButton);
             this.Controls.Add(this.loadTextFile);
             this.Controls.Add(this.preParse);
             this.MaximizeBox = false;
@@ -112,7 +112,7 @@
         private System.Windows.Forms.RichTextBox preParse;
         private System.Windows.Forms.Button loadTextFile;
         private System.Windows.Forms.RichTextBox postParse;
-        private System.Windows.Forms.Button fuckclinton;
+        private System.Windows.Forms.Button interpretButton;
 
 
         
