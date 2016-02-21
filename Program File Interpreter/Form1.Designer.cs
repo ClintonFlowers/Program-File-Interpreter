@@ -81,7 +81,7 @@
             this.fuckclinton.TabIndex = 3;
             this.fuckclinton.Text = "Fuck Clinton";
             this.fuckclinton.UseVisualStyleBackColor = true;
-            this.fuckclinton.Click += new System.EventHandler(this.fuckclinton_Click);
+            this.fuckclinton.Click += new System.EventHandler(this.interpretButton_click);
             // 
             // Form1
             // 

@@ -47,7 +47,7 @@ namespace Program_File_Interpreter
             }
         }
 
-        private void fuckclinton_Click(object sender, EventArgs e)
+        private void interpretButton_click(object sender, EventArgs e)
         {
             parseInitialInput();
             //translateToBinary();
