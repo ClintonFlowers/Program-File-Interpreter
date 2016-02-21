@@ -112,7 +112,7 @@
         private System.Windows.Forms.RichTextBox preParse;
         private System.Windows.Forms.Button loadTextFile;
         private System.Windows.Forms.RichTextBox postParse;
-        private System.Windows.Forms.Button fuckclinton;
+        private System.Windows.Forms.Button clintonisanigger;
 
 
         
