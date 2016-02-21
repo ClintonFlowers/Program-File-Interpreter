@@ -103,14 +103,19 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
         }
 
         #endregion
+               
 
         private System.Windows.Forms.RichTextBox preParse;
         private System.Windows.Forms.Button loadTextFile;
         private System.Windows.Forms.RichTextBox postParse;
         private System.Windows.Forms.Button fuckclinton;
+
+
+        
     }
 }
 
