@@ -61,7 +61,6 @@
             // 
             // postParse
             // 
-            this.postParse.Dock = System.Windows.Forms.DockStyle.Top;
             this.postParse.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.postParse.Location = new System.Drawing.Point(0, 352);
             this.postParse.MinimumSize = new System.Drawing.Size(887, 292);
@@ -93,6 +92,7 @@
             this.Controls.Add(this.fuckclinton);
             this.Controls.Add(this.loadTextFile);
             this.Controls.Add(this.preParse);
+            this.MaximumSize = new System.Drawing.Size(903, 683);
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "InterpreterForm";
             this.Text = "Operating System Interpreter";
