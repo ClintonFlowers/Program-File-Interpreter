@@ -95,7 +95,7 @@
             this.Controls.Add(this.preParse);
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "Form1";
-            this.Text = "FUCK CLINTON ISAAC FLOWERS";
+            this.Text = "Operating System Interpreter";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
