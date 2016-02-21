@@ -55,7 +55,7 @@
             this.loadthebitch.Name = "loadthebitch";
             this.loadthebitch.Size = new System.Drawing.Size(887, 30);
             this.loadthebitch.TabIndex = 1;
-            this.loadthebitch.Text = "Button which will prepare to fuck clinton";
+            this.loadthebitch.Text = "Load Text File";
             this.loadthebitch.UseVisualStyleBackColor = true;
             this.loadthebitch.Click += new System.EventHandler(this.loadthebitch_Click);
             // 
@@ -79,7 +79,7 @@
             this.fuckclinton.Name = "fuckclinton";
             this.fuckclinton.Size = new System.Drawing.Size(887, 30);
             this.fuckclinton.TabIndex = 3;
-            this.fuckclinton.Text = "Swaggy";
+            this.fuckclinton.Text = "Process Text";
             this.fuckclinton.UseVisualStyleBackColor = true;
             this.fuckclinton.Click += new System.EventHandler(this.fuckclinton_Click);
             // 
