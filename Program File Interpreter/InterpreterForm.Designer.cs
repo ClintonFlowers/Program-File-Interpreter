@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InterpreterForm));
             this.preParse = new System.Windows.Forms.RichTextBox();
-            this.loadthebitch = new System.Windows.Forms.Button();
+            this.loadTextFile = new System.Windows.Forms.Button();
             this.postParse = new System.Windows.Forms.RichTextBox();
             this.fuckclinton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -46,18 +46,18 @@
             this.preParse.TabIndex = 0;
             this.preParse.Text = resources.GetString("preParse.Text");
             // 
-            // loadthebitch
+            // loadTextFile
             // 
-            this.loadthebitch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.loadthebitch.Location = new System.Drawing.Point(0, 292);
-            this.loadthebitch.Margin = new System.Windows.Forms.Padding(0, 0, 3, 3);
-            this.loadthebitch.MaximumSize = new System.Drawing.Size(887, 30);
-            this.loadthebitch.Name = "loadthebitch";
-            this.loadthebitch.Size = new System.Drawing.Size(887, 30);
-            this.loadthebitch.TabIndex = 1;
-            this.loadthebitch.Text = "Load Text File";
-            this.loadthebitch.UseVisualStyleBackColor = true;
-            this.loadthebitch.Click += new System.EventHandler(this.loadthebitch_Click);
+            this.loadTextFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.loadTextFile.Location = new System.Drawing.Point(0, 292);
+            this.loadTextFile.Margin = new System.Windows.Forms.Padding(0, 0, 3, 3);
+            this.loadTextFile.MaximumSize = new System.Drawing.Size(887, 30);
+            this.loadTextFile.Name = "loadTextFile";
+            this.loadTextFile.Size = new System.Drawing.Size(887, 30);
+            this.loadTextFile.TabIndex = 1;
+            this.loadTextFile.Text = "Load Text File";
+            this.loadTextFile.UseVisualStyleBackColor = true;
+            this.loadTextFile.Click += new System.EventHandler(this.loadTextFile_Click);
             // 
             // postParse
             // 
@@ -83,7 +83,7 @@
             this.fuckclinton.UseVisualStyleBackColor = true;
             this.fuckclinton.Click += new System.EventHandler(this.interpretButton_click);
             // 
-            // Form1
+            // InterpreterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -91,10 +91,10 @@
             this.ClientSize = new System.Drawing.Size(887, 644);
             this.Controls.Add(this.postParse);
             this.Controls.Add(this.fuckclinton);
-            this.Controls.Add(this.loadthebitch);
+            this.Controls.Add(this.loadTextFile);
             this.Controls.Add(this.preParse);
             this.MinimumSize = new System.Drawing.Size(50, 50);
-            this.Name = "Form1";
+            this.Name = "InterpreterForm";
             this.Text = "Operating System Interpreter";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -104,7 +104,7 @@
         #endregion
 
         private System.Windows.Forms.RichTextBox preParse;
-        private System.Windows.Forms.Button loadthebitch;
+        private System.Windows.Forms.Button loadTextFile;
         private System.Windows.Forms.RichTextBox postParse;
         private System.Windows.Forms.Button fuckclinton;
     }
