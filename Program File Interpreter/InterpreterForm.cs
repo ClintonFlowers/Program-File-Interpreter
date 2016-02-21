@@ -26,7 +26,7 @@ namespace Program_File_Interpreter
 
         }
 
-        private void loadthebitch_Click(object sender, EventArgs e)
+        private void loadTextButton_click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Text Files (.txt)|*.txt";
