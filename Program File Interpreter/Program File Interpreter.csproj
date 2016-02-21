@@ -52,6 +52,7 @@
     <Compile Include="InterpeterForm.Designer.cs">
       <DependentUpon>InterpeterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="InterpeterForm.resx">
       <DependentUpon>InterpeterForm.cs</DependentUpon>
