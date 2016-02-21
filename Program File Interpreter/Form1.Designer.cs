@@ -1,6 +1,6 @@
 ﻿namespace Program_File_Interpreter
 {
-    partial class InterpeterForm
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InterpeterForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.preParse = new System.Windows.Forms.RichTextBox();
             this.loadthebitch = new System.Windows.Forms.Button();
             this.postParse = new System.Windows.Forms.RichTextBox();
@@ -57,7 +57,7 @@
             this.loadthebitch.TabIndex = 1;
             this.loadthebitch.Text = "Load Text File";
             this.loadthebitch.UseVisualStyleBackColor = true;
-            this.loadthebitch.Click += new System.EventHandler(this.loadFileButton_click);
+            this.loadthebitch.Click += new System.EventHandler(this.loadthebitch_Click);
             // 
             // postParse
             // 

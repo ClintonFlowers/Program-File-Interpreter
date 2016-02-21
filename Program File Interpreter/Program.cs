@@ -16,7 +16,7 @@ namespace Program_File_Interpreter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InterpeterForm());
+            Application.Run(new Form1());
         }
     }
 }
