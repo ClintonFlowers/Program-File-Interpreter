@@ -92,9 +92,13 @@
             this.Controls.Add(this.fuckclinton);
             this.Controls.Add(this.loadTextFile);
             this.Controls.Add(this.preParse);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(903, 683);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(50, 50);
             this.Name = "InterpreterForm";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Operating System Interpreter";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
