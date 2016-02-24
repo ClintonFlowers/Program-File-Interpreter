@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 
 namespace Program_File_Interpreter
 {
     public partial class InterpreterForm : Form
     {
+        byte[,] disk = new byte[2048, 4]; // Currently unused
 
         public List<string> operations = new List<string>();
 
@@ -62,6 +64,7 @@ namespace Program_File_Interpreter
 
         private void parseInitialInput()
         {
+            postParse.Clear();
             foreach (string line in preParse.Lines)
             {
                 if (line.Length == 10 && !line.StartsWith("//"))
@@ -150,6 +153,20 @@ namespace Program_File_Interpreter
                 //postParse.AppendText(currentLine + " ");
                 //postParse.AppendText(Environment.NewLine);
                 //postParse.AppendText(currentLine + Environment.NewLine);
+            }
+
+            //writeToDisk(operations);
+        }
+
+        private void writeToDisk(List<string> ops)
+        {
+            foreach(string line in ops)
+            {
+                string part = line.Substring(0, 8);
+                byte test = Convert.ToByte(part,2);
+                disk[0, 0] = test;
+                    //Convert.ToByte(part,2);
+                Debug.WriteLine(disk[0, 0]); // Todo: Make this not loop so much, and work properly for all bytes, not just 0,0.
             }
         }
 
