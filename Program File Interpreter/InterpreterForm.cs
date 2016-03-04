@@ -14,7 +14,14 @@ namespace Program_File_Interpreter
 {
     public partial class InterpreterForm : Form
     {
-        byte[,] disk = new byte[2048, 4]; // Currently unused
+        /*
+        Todos:
+        Improve UI, show each step of the input interpreting process--don't overwrite the same text box like currently. 
+        Separate jobs; create struct to store process control block/PCB.
+        Implement basic memory management/MMU. 
+        */
+
+        byte[,] disk = new byte[2048, 4]; // Currently WIP
 
         public List<string> operations = new List<string>();
 
@@ -44,7 +51,7 @@ namespace Program_File_Interpreter
                     while (!reader.EndOfStream) { 
                         preParse.AppendText(reader.ReadLine() + Environment.NewLine);
                     }
-                    removeLastLine(preParse); //removes last line
+                    removeLastLine(preParse); // Remove extra last line resulting from the final iteration of append, above.
                 }
             }
         }
@@ -52,10 +59,7 @@ namespace Program_File_Interpreter
         private void interpretButton_click(object sender, EventArgs e)
         {
             parseInitialInput();
-            //translateToBinary();
         }
-
-
 
         public void removeLastLine(RichTextBox rtb)
         {
@@ -64,36 +68,39 @@ namespace Program_File_Interpreter
 
         private void parseInitialInput()
         {
+            // Splits "0x" from each and appends to postParse text box
             postParse.Clear();
             foreach (string line in preParse.Lines)
             {
                 if (line.Length == 10 && !line.StartsWith("//"))
                 {
+                    // Line contains an operation or other data. 
                     postParse.AppendText(line.Substring(2) + Environment.NewLine);
                 }
+                if (line.StartsWith("//"))
+                {
+                    // Line is a job. Do special stuff. Probably use a struct to store program/routine/job data. 
+                }
             }
-            removeLastLine(postParse); //removes last line
+            removeLastLine(postParse); // Remove extra last line resulting from the final iteration of append, above.
 
+            // Convert each line from hex to binary, parse their meaning, and write to postParse as semi-human-readable instructions
             List<string> textBoxStorage = new List<string>(postParse.Lines.ToList());
             postParse.Clear();
             foreach (string line in textBoxStorage)
             {
-                string currentLine = Convert.ToString(Convert.ToInt32(line, 16), 2);
+                string currentLine = Convert.ToString(Convert.ToInt32(line, 16), 2); // Line: Hex to Binary
 
+                // todo: consider replacing with padLeft?
                 while (currentLine.Length < 32)
                 {
                     currentLine = "0" + currentLine;
                 }
 
-                operations.Add(currentLine);
+                operations.Add(currentLine); // Add the binary version of the line to the operations list
 
-                for (int i = 4; i < 35; i = i + 5)
-                {
-                    //currentLine = currentLine.Insert(i, " ");
-                }
-
+                // Determine the "instruction format" from first 2 bits and append meaning to surrogate string
                 string addme = "";
-
                 switch (currentLine.Substring(0, 2))
                 {
                     case "00": postParse.AppendText("A/IF ");
@@ -115,12 +122,13 @@ namespace Program_File_Interpreter
                         addme += currentLine.Substring(12, 4) + " ";
                         addme += currentLine.Substring(16, 16) + " ";
                         break;
-
                 }
 
+                // Determine the operation from opcode bits and append meaning to currentLine
                 switch (currentLine.Substring(2, 6))
                 {
-                    case "000000": postParse.AppendText("Read             "); break;
+                    // padRight isn't better than raw padding in this case, but it is a thing
+                    case "000000": postParse.AppendText("Read             "); break; 
                     case "000001": postParse.AppendText("Write            "); break;
                     case "000010": postParse.AppendText("Store            "); break;
                     case "000011": postParse.AppendText("Load             "); break;
@@ -150,24 +158,19 @@ namespace Program_File_Interpreter
 
                 }
                 postParse.AppendText(addme + Environment.NewLine);
-                //postParse.AppendText(currentLine + " ");
-                //postParse.AppendText(Environment.NewLine);
-                //postParse.AppendText(currentLine + Environment.NewLine);
             }
-
-            //writeToDisk(operations);
+            writeToDisk(operations);
         }
 
-        private void writeToDisk(List<string> ops)
+        private void writeToDisk(List<string> ops) // WIP
         {
-            foreach(string line in ops)
+            for(int i = 0; i < ops.Count; i++)
             {
-                string part = line.Substring(0, 8);
-                byte test = Convert.ToByte(part,2);
-                disk[0, 0] = test;
-                    //Convert.ToByte(part,2);
-                Debug.WriteLine(disk[0, 0]); // Todo: Make this not loop so much, and work properly for all bytes, not just 0,0.
+                string part = ops[i].Substring(0, 8);
+                byte test = Convert.ToByte(part, 2);
+                disk[i, 0] = test;
             }
+            Debug.WriteLine(Convert.ToString(disk[0, 0], 2).PadLeft(8, '0')); // for testing
         }
 
         private void arithInstruction()
