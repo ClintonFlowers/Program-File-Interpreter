@@ -27,6 +27,8 @@ namespace Program_File_Interpreter
 
         public List<string> operations = new List<string>();
         private OSMemory memorySystem = new OSMemory();
+        List<pcb> jobs = new List<pcb>();
+        List<pcb> data = new List<pcb>();
 
         public InterpreterForm()
         {
@@ -88,6 +90,7 @@ namespace Program_File_Interpreter
                     newPCB.id = Convert.ToInt32(portions[2], 16);
                     newPCB.codeSize = Convert.ToInt32(portions[3], 16);
                     newPCB.priority = Convert.ToInt32(portions[4], 16);
+                    jobs.Add(newPCB);
                 }
                 else if (line.StartsWith("// Data"))
                 {
@@ -97,6 +100,7 @@ namespace Program_File_Interpreter
                     newPCB2.state.inputBufferSize = Convert.ToInt32(dataPortions[2], 16);
                     newPCB2.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
                     newPCB2.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
+                    data.Add(newPCB2);
                 }
             }
 

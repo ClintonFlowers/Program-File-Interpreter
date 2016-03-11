@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace Program_File_Interpreter
 {
     class pcb
     {
-        
         public int id;
         public int cpuid;
         public int programCounter;
@@ -37,6 +37,18 @@ namespace Program_File_Interpreter
 
     class registers
     {
+        // Create new registers
+        public OSMemory.word[] regs = new OSMemory.word[16];
+        // Instantiate new/default registers
+        public registers()
+        {
+            for(int i = 0; i < regs.Length; i++)
+            {
+                regs[i] = new OSMemory.word(4); // 4 bytes = 32 bits
+            }
+            regs[0].bytes = new byte[] { 0, 0, 0, 0 }; // Accumulator
+            regs[0].bytes = new byte[] { 0, 0, 0, 0 }; // Zero register
+        }
         // accumulators, index, general
     }
     class sched

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,15 @@ namespace Program_File_Interpreter
             }
         }
 
-        class word
+        /// <summary>
+        /// General class for storage of words, stored internally as an array of bytes, defaulting to 4 bytes/32 bits per word. 
+        /// </summary>
+        public class word
         {
             public byte[] bytes;
+            /// <summary>
+            /// Default constructor of 4 bytes/32 bits. 
+            /// </summary>
             public word()
             {
                 this.bytes = new byte[4];
@@ -43,27 +50,44 @@ namespace Program_File_Interpreter
                 bytes[4] = four;
             }
 
+            /// <summary>
+            /// Length of the word to be used, in bytes.
+            /// </summary>
+            /// <param name="byteCount"></param>
             public word(int byteCount)
             {
                 this.bytes = new byte[byteCount];
             }
             public string bytesString
             {
-                get { return Convert.ToString(bytes[0], 2) + Convert.ToString(bytes[1], 2) + Convert.ToString(bytes[2], 2) + Convert.ToString(bytes[3], 2); }
-                set {
+                get
+                {
+                    StringBuilder builder = new StringBuilder();
+                    for(int i = 0; i < bytes.Length; i++)
+                    {
+                        builder.Append(Convert.ToString(bytes[i], 2).PadLeft(8,'0'));
+                    }
+                    return builder.ToString();
+                }
+                set
+                {
+                    // todo: handle exceptions such as a string that's too long
                     Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
                 }
             }
+
+            public BitArray wordBitArray
+            {
+                get
+                {
+                    return new BitArray(bytes);
+                }
+                set
+                {
+                    value.CopyTo(bytes, 0);
+                }
+            }
         }
-
-
-        void stuff()
-        {
-            pcb cake = new pcb();
-            cake.state.pc = 5;
-            int icing = cake.state.pc;
-        }
-
 
         /// <summary>
         /// Converts a 32-character-long string containing binary to an array of bytes
