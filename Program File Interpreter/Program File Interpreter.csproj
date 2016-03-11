@@ -52,7 +52,6 @@
     <Compile Include="InterpreterForm.Designer.cs">
       <DependentUpon>InterpreterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Memory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="InterpreterForm.resx">
