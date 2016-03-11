@@ -16,7 +16,7 @@ namespace Program_File_Interpreter
         */
 
         private word[] ram = new word[1024];
-        private word[] disk = new word[2048];
+        public word[] disk = new word[2048];
 
         public OSMemory()
         {
@@ -34,6 +34,24 @@ namespace Program_File_Interpreter
         public class word
         {
             public byte[] bytes;
+
+            /// <summary>
+            /// Theoretically allows array-like access to each bit of the word (as a bool) using an Indexer
+            /// </summary>
+            /// <param name="i"></param>
+            /// <returns></returns>
+            public bool this[int i]
+            {
+                get
+                {
+                    return new BitArray(bytes)[i];
+                }
+                set
+                {
+                    BitArray tempBArray = new BitArray(bytes);
+                    tempBArray[i] = value;
+                }
+            }
             /// <summary>
             /// Default constructor of 4 bytes/32 bits. 
             /// </summary>
@@ -65,7 +83,7 @@ namespace Program_File_Interpreter
                     StringBuilder builder = new StringBuilder();
                     for(int i = 0; i < bytes.Length; i++)
                     {
-                        builder.Append(Convert.ToString(bytes[i], 2).PadLeft(8,'0'));
+                        builder.Append(Convert.ToString(bytes[i], 2).PadLeft(8, '0'));
                     }
                     return builder.ToString();
                 }
