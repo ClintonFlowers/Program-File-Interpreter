@@ -8,17 +8,18 @@ namespace Program_File_Interpreter
 {
     class pcb
     {
+        
         public int id;
         public int cpuid;
         public int programCounter;
-        public state state;
+        public state state = new state();
         public int codeSize; // Second number from JOB line. # of words constituting instructions of the job. 
-        public registers registers;
-        public sched sched;
-        public memories memories;
-        public progeny progeny;
+        public registers registers = new registers();
+        public sched sched = new sched();
+        public memories memories = new memories();
+        public progeny progeny = new progeny();
         public int parent; // pointer to parent child, null if not spawned
-        public resources resources;
+        public resources resources = new resources();
         public int status; // running, ready, blocked, new
         public int statusInfo; // pointer to (ready-list of active processes) OR (resource-list on blocked processes)
         public int priority; // extracted from the last value of the JOB line

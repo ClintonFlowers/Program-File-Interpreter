@@ -88,17 +88,17 @@ namespace Program_File_Interpreter
                     newPCB.id = Convert.ToInt32(portions[2], 16);
                     newPCB.codeSize = Convert.ToInt32(portions[3], 16);
                     newPCB.priority = Convert.ToInt32(portions[4], 16);
-                    Debug.Print(Convert.ToString(newPCB.id,16) + " " + Convert.ToString(newPCB.codeSize,16) + " " + Convert.ToString(newPCB.priority, 16));
+                    Debug.Print("Job: " + Convert.ToString(newPCB.id,16) + " " + Convert.ToString(newPCB.codeSize,16) + " " + Convert.ToString(newPCB.priority, 16));
                 }
                 else if (line.StartsWith("// Data"))
                 {
                     // Line is a data declaration. Do special stuff. Probably use a struct to store program/routine/job data. 
                     string[] dataPortions = line.Split(' ');
-                    pcb newPCB = new pcb();
-                    newPCB.state.inputBufferSize = Convert.ToInt32(dataPortions[2], 16);
-                    newPCB.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
-                    newPCB.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
-                    Debug.Print(Convert.ToString(newPCB.id, 16) + " " + Convert.ToString(newPCB.codeSize, 16) + " " + Convert.ToString(newPCB.priority, 16));
+                    pcb newPCB2 = new pcb();
+                    newPCB2.state.inputBufferSize = Convert.ToInt32(dataPortions[2], 16);
+                    newPCB2.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
+                    newPCB2.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
+                    Debug.Print("Data: " + Convert.ToString(newPCB2.state.inputBufferSize, 16) + " " + Convert.ToString(newPCB2.state.outputBufferSize, 16) + " " + Convert.ToString(newPCB2.state.tempBufferSize, 16));
                 }
             }
             removeLastLine(postParse); // Remove extra last line resulting from the final iteration of append, above.
