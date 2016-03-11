@@ -71,44 +71,44 @@ namespace Program_File_Interpreter
 
         private void parseInitialInput()
         {
+            List<string> lineList = new List<string>();
             // Splits "0x" from each and appends to postParse text box
-            postParse.Clear();
             foreach (string line in preParse.Lines)
             {
                 if (line.Length == 10 && !line.StartsWith("//"))
                 {
                     // Line contains an operation or other data. 
-                    postParse.AppendText(line.Substring(2) + Environment.NewLine);
+                    lineList.Add(line.Substring(2));
                 }
                 else if (line.StartsWith("// JOB"))
                 {
-                    // Line is a job. Do special stuff. Probably use a struct to store program/routine/job data. 
+                    // Line is a job. Do special stuff -- add it to a Process Control Block object. 
                     string[] portions = line.Split(' ');
                     pcb newPCB = new pcb();
                     newPCB.id = Convert.ToInt32(portions[2], 16);
                     newPCB.codeSize = Convert.ToInt32(portions[3], 16);
                     newPCB.priority = Convert.ToInt32(portions[4], 16);
-                    Debug.Print("Job: " + Convert.ToString(newPCB.id,16) + " " + Convert.ToString(newPCB.codeSize,16) + " " + Convert.ToString(newPCB.priority, 16));
                 }
                 else if (line.StartsWith("// Data"))
                 {
-                    // Line is a data declaration. Do special stuff. Probably use a struct to store program/routine/job data. 
+                    // Line is a data declaration. Do special stuff. Probably use disk to store data. 
                     string[] dataPortions = line.Split(' ');
                     pcb newPCB2 = new pcb();
                     newPCB2.state.inputBufferSize = Convert.ToInt32(dataPortions[2], 16);
                     newPCB2.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
                     newPCB2.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
-                    Debug.Print("Data: " + Convert.ToString(newPCB2.state.inputBufferSize, 16) + " " + Convert.ToString(newPCB2.state.outputBufferSize, 16) + " " + Convert.ToString(newPCB2.state.tempBufferSize, 16));
                 }
             }
-            removeLastLine(postParse); // Remove extra last line resulting from the final iteration of append, above.
 
             // Convert each line from hex to binary, parse their meaning, and write to postParse as semi-human-readable instructions
-            List<string> textBoxStorage = new List<string>(postParse.Lines.ToList());
+            List<string> lineList2 = new List<string>(lineList.ToArray());
+            List<string> lineList3 = new List<string>();
             postParse.Clear();
-            foreach (string line in textBoxStorage)
+            operations.Clear();
+            for (int i = 0; i < lineList2.Count; i++)
             {
-                string currentLine = Convert.ToString(Convert.ToInt32(line, 16), 2); // Line: Hex to Binary
+                int lineInt = Convert.ToInt32(lineList2[i], 16);
+                string currentLine = Convert.ToString(lineInt, 2); // Line: Hex to Binary
 
                 // todo: consider replacing with padLeft?
                 while (currentLine.Length < 32)
@@ -119,65 +119,78 @@ namespace Program_File_Interpreter
                 operations.Add(currentLine); // Add the binary version of the line to the operations list
 
                 // Determine the "instruction format" from first 2 bits and append meaning to surrogate string
-                string addme = "";
+                StringBuilder addme = new StringBuilder();
                 switch (currentLine.Substring(0, 2))
                 {
-                    case "00": postParse.AppendText("A/IF ");
-                        addme = currentLine.Substring(8,4) + " ";
-                        addme += currentLine.Substring(12, 4) + " ";
-                        addme += currentLine.Substring(16, 4) + " ";
-                        addme += currentLine.Substring(20, 12) + " ";
+                    case "00": addme.Append("A/IF ");
                         break;
-                    case "01": postParse.AppendText("CBIF ");
-                        addme = currentLine.Substring(8, 4) + " ";
-                        addme += currentLine.Substring(12, 4) + " ";
-                        addme += currentLine.Substring(16, 16) + " ";
+                    case "01": addme.Append("CBIF ");
                         break;
-                    case "10": postParse.AppendText("UNJF "); 
-                        addme = currentLine.Substring(8, 24) + " ";
+                    case "10": addme.Append("UNJF "); 
                         break;
-                    case "11": postParse.AppendText("I/OF ");
-                        addme = currentLine.Substring(8, 4) + " ";
-                        addme += currentLine.Substring(12, 4) + " ";
-                        addme += currentLine.Substring(16, 16) + " ";
+                    case "11": addme.Append("I/OF ");
                         break;
                 }
 
-                // Determine the operation from opcode bits and append meaning to currentLine
+                // Determine the operation from opcode bits and append meaning to current line (addme)
                 switch (currentLine.Substring(2, 6))
                 {
                     // padRight isn't better than raw padding in this case, but it is a thing
-                    case "000000": postParse.AppendText("Read             "); break; 
-                    case "000001": postParse.AppendText("Write            "); break;
-                    case "000010": postParse.AppendText("Store            "); break;
-                    case "000011": postParse.AppendText("Load             "); break;
-                    case "000100": postParse.AppendText("Move             "); break;
-                    case "000101": postParse.AppendText("Add              "); break;
-                    case "000110": postParse.AppendText("Subtract         "); break;
-                    case "000111": postParse.AppendText("Multiply         "); break;
-                    case "001000": postParse.AppendText("Divide           "); break;
-                    case "001001": postParse.AppendText("AND              "); break;
-                    case "001010": postParse.AppendText("OR               "); break;
-                    case "001011": postParse.AppendText("Move I           "); break;
-                    case "001100": postParse.AppendText("Add I            "); break;
-                    case "001101": postParse.AppendText("Multiply I       "); break;
-                    case "001110": postParse.AppendText("Divide I         "); break;
-                    case "001111": postParse.AppendText("Load I           "); break;
-                    case "010000": postParse.AppendText("Set Less Than    "); break;
-                    case "010001": postParse.AppendText("Set Less Than I  "); break;
-                    case "010010": postParse.AppendText("Halt             "); break;
-                    case "010011": postParse.AppendText("Next Instruction "); break;
-                    case "010100": postParse.AppendText("Jump             "); break;
-                    case "010101": postParse.AppendText("BEQ              "); break;
-                    case "010110": postParse.AppendText("BNE              "); break;
-                    case "010111": postParse.AppendText("BEZ              "); break;
-                    case "011000": postParse.AppendText("BNZ              "); break;
-                    case "011001": postParse.AppendText("BGZ              "); break;
-                    case "011010": postParse.AppendText("BLZ              "); break;
-
+                    case "000000": addme.Append("Read             "); break; 
+                    case "000001": addme.Append("Write            "); break;
+                    case "000010": addme.Append("Store            "); break;
+                    case "000011": addme.Append("Load             "); break;
+                    case "000100": addme.Append("Move             "); break;
+                    case "000101": addme.Append("Add              "); break;
+                    case "000110": addme.Append("Subtract         "); break;
+                    case "000111": addme.Append("Multiply         "); break;
+                    case "001000": addme.Append("Divide           "); break;
+                    case "001001": addme.Append("AND              "); break;
+                    case "001010": addme.Append("OR               "); break;
+                    case "001011": addme.Append("Move I           "); break;
+                    case "001100": addme.Append("Add I            "); break;
+                    case "001101": addme.Append("Multiply I       "); break;
+                    case "001110": addme.Append("Divide I         "); break;
+                    case "001111": addme.Append("Load I           "); break;
+                    case "010000": addme.Append("Set Less Than    "); break;
+                    case "010001": addme.Append("Set Less Than I  "); break;
+                    case "010010": addme.Append("Halt             "); break;
+                    case "010011": addme.Append("Next Instruction "); break;
+                    case "010100": addme.Append("Jump             "); break;
+                    case "010101": addme.Append("BEQ              "); break;
+                    case "010110": addme.Append("BNE              "); break;
+                    case "010111": addme.Append("BEZ              "); break;
+                    case "011000": addme.Append("BNZ              "); break;
+                    case "011001": addme.Append("BGZ              "); break;
+                    case "011010": addme.Append("BLZ              "); break;
                 }
-                postParse.AppendText(addme + Environment.NewLine);
+
+                // Depending on the instruction format, append the relevant bits for the operations (e.g., s- and d-reg)
+                switch (currentLine.Substring(0, 2))
+                {
+                    case "00":
+                        addme.Append(currentLine.Substring(8, 4) + " ");
+                        addme.Append(currentLine.Substring(12, 4) + " ");
+                        addme.Append(currentLine.Substring(16, 4) + " ");
+                        addme.Append(currentLine.Substring(20, 12) + " ");
+                        break;
+                    case "01":
+                        addme.Append(currentLine.Substring(8, 4) + " ");
+                        addme.Append(currentLine.Substring(12, 4) + " ");
+                        addme.Append(currentLine.Substring(16, 16) + " ");
+                        break;
+                    case "10":
+                        addme.Append(currentLine.Substring(8, 24) + " ");
+                        break;
+                    case "11":
+                        addme.Append(currentLine.Substring(8, 4) + " ");
+                        addme.Append(currentLine.Substring(12, 4) + " ");
+                        addme.Append(currentLine.Substring(16, 16) + " ");
+                        break;
+                }
+                lineList3.Add(addme.ToString());
             }
+            postParse.Lines = lineList3.ToArray();
             memorySystem.writeToDisk(operations);
         }
 

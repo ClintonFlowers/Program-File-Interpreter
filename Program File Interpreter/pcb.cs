@@ -28,7 +28,7 @@ namespace Program_File_Interpreter
     class state
     {
         public int pc;
-        public int[] registers;
+        public int[] registers = new int[16];
         public int inputBufferSize;
         public int outputBufferSize;
         public int tempBufferSize;

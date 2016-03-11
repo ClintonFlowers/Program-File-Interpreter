@@ -14,15 +14,14 @@ namespace Program_File_Interpreter
         RAM and Disk are accessed at the 'word' level, with each word being 4 bytes (or 8 hex characters or 32 bits) long
         */
 
-        private byte[,] ram = new byte[1024, 4];
-        //private byte[,] disk = new byte[2048, 4]; // Currently WIP
+        private word[] ram = new word[1024];
         private word[] disk = new word[2048];
 
         public OSMemory()
         {
-            ram = new byte[1024, 4];
+            ram = new word[1024];
             disk = new word[2048];
-            for(int i = 0; i < disk.Length; i++)
+            for (int i = 0; i < disk.Length; i++)
             {
                 disk[i] = new word();
             }
@@ -48,36 +47,11 @@ namespace Program_File_Interpreter
             {
                 this.bytes = new byte[byteCount];
             }
-            
-            //public byte byte1
-            //{
-            //    get { return bytes[0]; }
-            //    set { bytes[0] = value; }
-            //}
-            //public byte byte2
-            //{
-            //    get { return bytes[1]; }
-            //    set { bytes[1] = value; }
-            //}
-            //public byte byte3
-            //{
-            //    get { return bytes[2]; }
-            //    set { bytes[2] = value; }
-            //}
-            //public byte byte4
-            //{
-            //    get { return bytes[3]; }
-            //    set { bytes[3] = value; }
-            //}
             public string bytesString
             {
                 get { return Convert.ToString(bytes[0], 2) + Convert.ToString(bytes[1], 2) + Convert.ToString(bytes[2], 2) + Convert.ToString(bytes[3], 2); }
                 set {
                     Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
-                    //bytes[0] = Convert.ToByte(value.Substring(0, 8), 2);
-                    //bytes[1] = Convert.ToByte(value.Substring(8, 8), 2);
-                    //bytes[2] = Convert.ToByte(value.Substring(16, 8), 2);
-                    //bytes[3] = Convert.ToByte(value.Substring(24, 8), 2);
                 }
             }
         }
@@ -118,19 +92,6 @@ namespace Program_File_Interpreter
                 string part = ops[i].Substring(0, 8);
                 byte test = Convert.ToByte(part, 2);
                 disk[i].bytesString = ops[i];
-                //Console.Write(disk[i].bytesString + Environment.NewLine);
-                /*
-                disk[i, 0] = test;
-                disk[i, 1]= Convert.ToByte(ops[i].Substring(8, 8),2);
-                disk[i, 2] = Convert.ToByte(ops[i].Substring(8, 8), 2);
-                disk[i, 3] = Convert.ToByte(ops[i].Substring(8, 8), 2);
-                */
-                //byte[] currentRow = new byte[] { disk[i, 0], disk[i, 1], disk[i, 2], disk[i, 3] };
-                //currentRow = stringToBytes(ops[i].Substring(0, 32));
-                //disk[i, 0] = currentRow[0];
-                //disk[i, 1] = currentRow[1];
-                //disk[i, 2] = currentRow[2];
-                //disk[i, 3] = currentRow[3];
             }
         }
     }
