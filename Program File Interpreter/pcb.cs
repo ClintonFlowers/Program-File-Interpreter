@@ -8,6 +8,7 @@ namespace Program_File_Interpreter
 {
     class pcb
     {
+        public int id;
         public int cpuid;
         public int programCounter;
         public state state;
@@ -36,6 +37,7 @@ namespace Program_File_Interpreter
     }
     class sched
     {
+        int priority;
         // burst-time, priority, queue-type, time-slice, remain-time
     }
     class accounts

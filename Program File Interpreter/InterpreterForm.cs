@@ -80,19 +80,21 @@ namespace Program_File_Interpreter
                     // Line contains an operation or other data. 
                     postParse.AppendText(line.Substring(2) + Environment.NewLine);
                 }
-                if (line.StartsWith("// JOB"))
+                else if (line.StartsWith("// JOB"))
                 {
                     // Line is a job. Do special stuff. Probably use a struct to store program/routine/job data. 
-
+                    string[] portions = line.Split(' ');
+                    pcb newPCB = new pcb();
+                    newPCB.id = Convert.ToInt32(portions[2], 16);
+                    newPCB.codeSize = Convert.ToInt32(portions[3], 16);
+                    newPCB.priority = Convert.ToInt32(portions[4], 16);
+                    Debug.Print(Convert.ToString(newPCB.id,16) + " " + Convert.ToString(newPCB.codeSize,16) + " " + Convert.ToString(newPCB.priority, 16));
                 }
-
-                if (line.StartsWith("// Data"))
+                else if (line.StartsWith("// Data"))
                 {
                     // Line is a data declaration. Do special stuff. Probably use a struct to store program/routine/job data. 
 
                 }
-
-
             }
             removeLastLine(postParse); // Remove extra last line resulting from the final iteration of append, above.
 
