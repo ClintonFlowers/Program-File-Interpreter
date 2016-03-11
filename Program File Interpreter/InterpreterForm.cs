@@ -18,12 +18,15 @@ namespace Program_File_Interpreter
         Todos:
         Improve UI, show each step of the input interpreting process--don't overwrite the same text box like currently. 
         Separate jobs; create struct to store process control block/PCB.
-        Implement basic memory management/MMU. 
+        Implement basic memory management/MMU and various classes
         */
-
-        byte[,] disk = new byte[2048, 4]; // Currently WIP
+        // https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
+        // https://msdn.microsoft.com/en-us/library/z5z9kes2.aspx
+        // https://msdn.microsoft.com/en-us/library/ms131069.aspx
+        // https://msdn.microsoft.com/en-us/library/system.collections.specialized.bitvector32(v=vs.110).aspx
 
         public List<string> operations = new List<string>();
+        private OSMemory memorySystem = new OSMemory();
 
         public InterpreterForm()
         {
@@ -159,18 +162,7 @@ namespace Program_File_Interpreter
                 }
                 postParse.AppendText(addme + Environment.NewLine);
             }
-            writeToDisk(operations);
-        }
-
-        private void writeToDisk(List<string> ops) // WIP
-        {
-            for(int i = 0; i < ops.Count; i++)
-            {
-                string part = ops[i].Substring(0, 8);
-                byte test = Convert.ToByte(part, 2);
-                disk[i, 0] = test;
-            }
-            Debug.WriteLine(Convert.ToString(disk[0, 0], 2).PadLeft(8, '0')); // for testing
+            memorySystem.writeToDisk(operations);
         }
 
         private void arithInstruction()
