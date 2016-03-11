@@ -28,6 +28,9 @@ namespace Program_File_Interpreter
     {
         public int pc;
         public int[] registers;
+        public int inputBufferSize;
+        public int outputBufferSize;
+        public int tempBufferSize;
         // permissions, buffers, caches, active pages/blocks
     }
 
