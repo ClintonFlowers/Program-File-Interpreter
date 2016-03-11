@@ -77,10 +77,19 @@ namespace Program_File_Interpreter
                     // Line contains an operation or other data. 
                     postParse.AppendText(line.Substring(2) + Environment.NewLine);
                 }
-                if (line.StartsWith("//"))
+                if (line.StartsWith("// JOB"))
                 {
                     // Line is a job. Do special stuff. Probably use a struct to store program/routine/job data. 
+
                 }
+
+                if (line.StartsWith("// Data"))
+                {
+                    // Line is a data declaration. Do special stuff. Probably use a struct to store program/routine/job data. 
+
+                }
+
+
             }
             removeLastLine(postParse); // Remove extra last line resulting from the final iteration of append, above.
 
