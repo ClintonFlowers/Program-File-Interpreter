@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -9,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-
 namespace Program_File_Interpreter
 {
     public partial class InterpreterForm : Form
@@ -18,12 +19,18 @@ namespace Program_File_Interpreter
         Todos:
         Improve UI, show each step of the input interpreting process--don't overwrite the same text box like currently. 
         Separate jobs; create struct to store process control block/PCB.
-        Implement basic memory management/MMU. 
+        Implement basic memory management/MMU and various classes.
         */
+        // https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
+        // https://msdn.microsoft.com/en-us/library/z5z9kes2.aspx
+        // https://msdn.microsoft.com/en-us/library/ms131069.aspx
+        // https://msdn.microsoft.com/en-us/library/system.collections.specialized.bitvector32(v=vs.110).aspx
 
-        byte[,] disk = new byte[2048, 4]; // Currently WIP
+        BitVector32[] disk = new BitVector32[2048];
+        byte[,] byteDisk = new byte[2048, 4]; // Currently WIP
 
-        public List<string> operations = new List<string>();
+        //public List<string> operations = new List<string>();
+        public List<BitVector32> operations = new List<BitVector32>();
 
         public InterpreterForm()
         {
@@ -97,7 +104,7 @@ namespace Program_File_Interpreter
                     currentLine = "0" + currentLine;
                 }
 
-                operations.Add(currentLine); // Add the binary version of the line to the operations list
+                operations.Add(new BitVector32(Convert.ToInt32(currentLine,2))); // Add the binary version of the line to the operations list
 
                 // Determine the "instruction format" from first 2 bits and append meaning to surrogate string
                 string addme = "";
@@ -162,15 +169,16 @@ namespace Program_File_Interpreter
             writeToDisk(operations);
         }
 
-        private void writeToDisk(List<string> ops) // WIP
+        private void writeToDisk(List<BitVector32> ops) // WIP
         {
             for(int i = 0; i < ops.Count; i++)
             {
-                string part = ops[i].Substring(0, 8);
+                string part = Memory.bitVectorString(ops[i]).Substring(0,8);
                 byte test = Convert.ToByte(part, 2);
-                disk[i, 0] = test;
+                //disk[i, 0] = test;
+                //disk[i] = test;
             }
-            Debug.WriteLine(Convert.ToString(disk[0, 0], 2).PadLeft(8, '0')); // for testing
+            //Debug.WriteLine(Convert.ToString(disk[0, 0], 2).PadLeft(8, '0')); // for testing
         }
 
         private void arithInstruction()
