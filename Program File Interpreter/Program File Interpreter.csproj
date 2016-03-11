@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cpu.cs" />
     <Compile Include="InterpreterForm.cs">
       <SubType>Form</SubType>
     </Compile>

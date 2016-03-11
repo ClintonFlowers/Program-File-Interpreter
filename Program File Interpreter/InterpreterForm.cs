@@ -172,26 +172,31 @@ namespace Program_File_Interpreter
                         addme.Append(currentLine.Substring(8, 4) + " ");
                         addme.Append(currentLine.Substring(12, 4) + " ");
                         addme.Append(currentLine.Substring(16, 4) + " ");
-                        addme.Append(currentLine.Substring(20, 12) + " ");
+                        addme.Append(currentLine.Substring(20, 12));
                         break;
                     case "01":
                         addme.Append(currentLine.Substring(8, 4) + " ");
                         addme.Append(currentLine.Substring(12, 4) + " ");
-                        addme.Append(currentLine.Substring(16, 16) + " ");
+                        addme.Append(currentLine.Substring(16, 16));
                         break;
                     case "10":
-                        addme.Append(currentLine.Substring(8, 24) + " ");
+                        addme.Append(currentLine.Substring(8, 24));
                         break;
                     case "11":
                         addme.Append(currentLine.Substring(8, 4) + " ");
                         addme.Append(currentLine.Substring(12, 4) + " ");
-                        addme.Append(currentLine.Substring(16, 16) + " ");
+                        addme.Append(currentLine.Substring(16, 16));
                         break;
                 }
                 lineList3.Add(addme.ToString());
             }
             postParse.Lines = lineList3.ToArray();
             memorySystem.writeToDisk(operations);
+
+            for(int i = 0; i < operations.Count; i++)
+            {
+                cpu.execute(operations[i]);
+            }
         }
 
         private void arithInstruction()
