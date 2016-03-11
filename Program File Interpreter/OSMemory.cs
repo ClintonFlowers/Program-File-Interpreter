@@ -76,7 +76,7 @@ namespace Program_File_Interpreter
             {
                 this.bytes = new byte[byteCount];
             }
-            public string bytesString
+            public string asString
             {
                 get
                 {
@@ -91,6 +91,22 @@ namespace Program_File_Interpreter
                 {
                     // todo: handle exceptions such as a string that's too long
                     Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
+                }
+            }
+
+            public int asInt
+            {
+                get
+                {
+                    return BitConverter.ToInt32(bytes, 0);
+                }
+                set
+                {
+                    // todo: confirm endianness
+                    bytes[0] = BitConverter.GetBytes(value)[3];
+                    bytes[1] = BitConverter.GetBytes(value)[2];
+                    bytes[2] = BitConverter.GetBytes(value)[1];
+                    bytes[3] = BitConverter.GetBytes(value)[0];
                 }
             }
 
@@ -131,9 +147,11 @@ namespace Program_File_Interpreter
         {
             for (int i = 0; i < ops.Count; i++)
             {
-                string part = ops[i].Substring(0, 8);
-                byte test = Convert.ToByte(part, 2);
-                disk[i].bytesString = ops[i];
+                //string part = ops[i].Substring(0, 8);
+                //byte test = Convert.ToByte(part, 2);
+                disk[i].asInt = Convert.ToInt32(ops[i], 2); // for testing purposes
+                
+                Console.Write(disk[i].asString + Environment.NewLine);
             }
         }
     }

@@ -111,8 +111,8 @@ namespace Program_File_Interpreter
             operations.Clear();
             for (int i = 0; i < lineList2.Count; i++)
             {
-                int lineInt = Convert.ToInt32(lineList2[i], 16);
-                string currentLine = Convert.ToString(lineInt, 2); // Line: Hex to Binary
+                int lineInt = Convert.ToInt32(lineList2[i], 16); // Line: Hex to Binary/Int
+                string currentLine = Convert.ToString(lineInt, 2); // Line: Binary/Int to Binary String
 
                 // todo: consider replacing with padLeft?
                 while (currentLine.Length < 32)
