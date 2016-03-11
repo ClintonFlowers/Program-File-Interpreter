@@ -70,11 +70,11 @@
             this.postParse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.postParse.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.postParse.Location = new System.Drawing.Point(3, 27);
-            this.postParse.MinimumSize = new System.Drawing.Size(473, 0);
             this.postParse.Name = "postParse";
-            this.postParse.Size = new System.Drawing.Size(473, 175);
+            this.postParse.Size = new System.Drawing.Size(374, 175);
             this.postParse.TabIndex = 2;
             this.postParse.Text = "";
+            this.postParse.WordWrap = false;
             // 
             // interpretButton
             // 
