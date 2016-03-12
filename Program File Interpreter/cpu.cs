@@ -12,6 +12,7 @@ namespace Program_File_Interpreter
         {
             string opcodestr = operation.Substring(2, 6);
             int opcode = Convert.ToInt16(opcodestr,2);
+            
             switch (opcode){
                 case 0x0: // read
                     break;

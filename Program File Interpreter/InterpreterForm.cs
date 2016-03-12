@@ -201,6 +201,12 @@ namespace Program_File_Interpreter
             {
                 cpu.execute(operations[i]);
             }
+            List<string> binaryStringList = new List<string>();
+            for(int i = 0; i < memorySystem.disk.Length; i++)
+            {
+                binaryStringList.Add(memorySystem.disk[i].asString);
+            }
+            richTextboxBinary.Lines = binaryStringList.ToArray();
         }
 
         private void arithInstruction()

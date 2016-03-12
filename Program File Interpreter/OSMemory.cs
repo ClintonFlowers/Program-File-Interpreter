@@ -76,6 +76,10 @@ namespace Program_File_Interpreter
             {
                 this.bytes = new byte[byteCount];
             }
+
+            /// <summary>
+            /// Write to and read from the word's byte[] as a string (currently 32 binary characters)
+            /// </summary>
             public string asString
             {
                 get
@@ -94,6 +98,9 @@ namespace Program_File_Interpreter
                 }
             }
 
+            /// <summary>
+            /// Write to and read from the word's byte[] as a (signed?) int32
+            /// </summary>
             public int asInt
             {
                 get
@@ -107,18 +114,6 @@ namespace Program_File_Interpreter
                     bytes[1] = BitConverter.GetBytes(value)[2];
                     bytes[2] = BitConverter.GetBytes(value)[1];
                     bytes[3] = BitConverter.GetBytes(value)[0];
-                }
-            }
-
-            public BitArray wordBitArray
-            {
-                get
-                {
-                    return new BitArray(bytes);
-                }
-                set
-                {
-                    value.CopyTo(bytes, 0);
                 }
             }
         }
@@ -150,8 +145,6 @@ namespace Program_File_Interpreter
                 //string part = ops[i].Substring(0, 8);
                 //byte test = Convert.ToByte(part, 2);
                 disk[i].asInt = Convert.ToInt32(ops[i], 2); // for testing purposes
-                
-                Console.Write(disk[i].asString + Environment.NewLine);
             }
         }
     }
