@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define debug
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,7 +65,7 @@ namespace Program_File_Interpreter
 
         private void interpretButton_click(object sender, EventArgs e)
         {
-            parseInitialInput();
+            loader();
         }
 
         public void removeLastLine(RichTextBox rtb)
@@ -71,18 +73,15 @@ namespace Program_File_Interpreter
             rtb.Lines = rtb.Lines.Take(rtb.Lines.Count() - 1).ToArray();
         }
 
-        private void parseInitialInput()
+        private void loader()
         {
             List<string> lineList = new List<string>();
+            int diskPosition = 0;
+            int ramPosition = 0;
             // Splits "0x" from each and appends to postParse text box
             foreach (string line in preParse.Lines)
             {
-                if (line.Length == 10 && !line.StartsWith("//"))
-                {
-                    // Line contains an operation or other data. 
-                    lineList.Add(line.Substring(2));
-                }
-                else if (line.StartsWith("// JOB"))
+                if (line.StartsWith("// JOB"))
                 {
                     // Line is a job. Do special stuff -- add it to a Process Control Block object. 
                     string[] portions = line.Split(' ');
@@ -91,6 +90,8 @@ namespace Program_File_Interpreter
                     newPCB.codeSize = Convert.ToInt32(portions[3], 16);
                     newPCB.priority = Convert.ToInt32(portions[4], 16);
                     jobs.Add(newPCB);
+                    OSMemory.word word = new OSMemory.word();
+                    //memorySystem.writeToDisk()
                 }
                 else if (line.StartsWith("// Data"))
                 {
@@ -101,6 +102,11 @@ namespace Program_File_Interpreter
                     newPCB2.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
                     newPCB2.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
                     data.Add(newPCB2);
+                }
+                else if (line.Length == 10 && !line.StartsWith("//"))
+                {
+                    // Line contains an operation or other data. 
+                    lineList.Add(line.Substring(2));                    
                 }
             }
 

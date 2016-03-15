@@ -15,7 +15,7 @@ namespace Program_File_Interpreter
         RAM and Disk are accessed at the 'word' level, with each word being 4 bytes (or 8 hex characters or 32 bits) long
         */
 
-        private word[] ram = new word[1024];
+        public word[] ram = new word[1024];
         public word[] disk = new word[2048];
 
         public OSMemory()
@@ -29,7 +29,7 @@ namespace Program_File_Interpreter
         }
 
         /// <summary>
-        /// General class for storage of words, stored internally as an array of bytes, defaulting to 4 bytes/32 bits per word. 
+        /// General class for storage of words, stored internally as a big-endian array of bytes, defaulting to 4 bytes/32 bits per word. 
         /// </summary>
         public class word
         {
@@ -69,7 +69,7 @@ namespace Program_File_Interpreter
             }
 
             /// <summary>
-            /// Length of the word to be used, in bytes.
+            /// Constructor allowing length of the word to be used, in bytes.
             /// </summary>
             /// <param name="byteCount"></param>
             public word(int byteCount)
@@ -116,6 +116,8 @@ namespace Program_File_Interpreter
                     bytes[3] = BitConverter.GetBytes(value)[0];
                 }
             }
+
+            //public void insertAt()
         }
 
         /// <summary>
@@ -140,12 +142,39 @@ namespace Program_File_Interpreter
         /// <param name="ops"></param>
         public void writeToDisk(List<string> ops) // WIP
         {
+#if (DEBUG)
             for (int i = 0; i < ops.Count; i++)
             {
                 //string part = ops[i].Substring(0, 8);
                 //byte test = Convert.ToByte(part, 2);
                 disk[i].asInt = Convert.ToInt32(ops[i], 2); // for testing purposes
             }
+#endif
+        }
+
+        /// <summary>
+        /// Writes the contents of a list of words, starting at addressStart, to local OSMemory.disk or OSMemory.ram
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <param name="package"></param>
+        /// <param name="addressStart"></param>
+        public void bulkWrite(List<word> package, Int32 addressStart, word[] storage)
+        {
+            for(int i = 0; i < package.Count; i++)
+            {
+                storage[i] = package[i];
+            }
+        }
+
+        /// <summary>
+        /// Writes a word to an address of either OSMemory.disk or OSMemory.ram
+        /// </summary>
+        /// <param name="storage"></param>
+        /// <param name="inputWord"></param>
+        /// <param name="address"></param>
+        public void write(word inputWord, Int32 address, word[] storage)
+        {
+
         }
     }
 }
