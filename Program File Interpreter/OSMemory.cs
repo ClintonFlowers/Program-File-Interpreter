@@ -93,8 +93,11 @@ namespace Program_File_Interpreter
                 }
                 set
                 {
-                    // todo: handle exceptions such as a string that's too long
-                    Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
+                    // todo: handle exceptions such as a string that's too long?
+                    for(int i = 0; i < bytes.Length; i++)
+                    {
+                        bytes[i] = Convert.ToByte(value.Substring(i * 8, 8), 2);
+                    }
                 }
             }
 
@@ -132,7 +135,6 @@ namespace Program_File_Interpreter
             byte[] toReturn = new byte[4];
             Buffer.BlockCopy(input.ToCharArray(), 0, toReturn, 0, toReturn.Length);
             return toReturn;
-            
         }
 
         /// <summary>
@@ -142,14 +144,12 @@ namespace Program_File_Interpreter
         /// <param name="ops"></param>
         public void writeToDisk(List<string> ops) // WIP
         {
-#if (DEBUG)
             for (int i = 0; i < ops.Count; i++)
             {
                 //string part = ops[i].Substring(0, 8);
                 //byte test = Convert.ToByte(part, 2);
                 disk[i].asInt = Convert.ToInt32(ops[i], 2); // for testing purposes
             }
-#endif
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Program_File_Interpreter
         {
             for(int i = 0; i < package.Count; i++)
             {
-                storage[i] = package[i];
+                storage[i + addressStart] = package[i];
             }
         }
 
@@ -174,7 +174,7 @@ namespace Program_File_Interpreter
         /// <param name="address"></param>
         public void write(word inputWord, Int32 address, word[] storage)
         {
-
+            disk[address] = inputWord;
         }
     }
 }
