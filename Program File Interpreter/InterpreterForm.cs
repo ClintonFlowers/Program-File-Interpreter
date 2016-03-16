@@ -212,11 +212,12 @@ namespace Program_File_Interpreter
 
             memorySystem.writeToDisk(operations);
 
-            Console.WriteLine("Job 0: ");
+            int whatJob = 0;
+            Console.WriteLine("Job {0}: ", whatJob);
             //for (int i = 0; i < memorySystem.jobs[0].memories.operationsEnd; i++)
-            while(memorySystem.jobs[0].programCounter <= memorySystem.jobs[0].memories.operationsEnd)
+            while(memorySystem.jobs[whatJob].programCounter <= memorySystem.jobs[whatJob].memories.operationsEnd)
             {
-                cpu.execute(memorySystem, memorySystem.jobs[0]);
+                cpu.execute(memorySystem, memorySystem.jobs[whatJob]);
             }
 
             List<string> binaryStringList = new List<string>();
