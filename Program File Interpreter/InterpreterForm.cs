@@ -83,11 +83,8 @@ namespace Program_File_Interpreter
             pcb newPCB = new pcb();
             block = new List<OSMemory.word>();
             // Splits "0x" from each and appends to postParse text box
-            //for(int i = 0; i < 70; i++)
             foreach (string line in preParse.Lines)
             {
-                //string line = preParse.Lines[i];
-                
                 if (line.StartsWith("// JOB"))
                 {
                     // Line is a job. Do special stuff -- add it to a Process Control Block object. 
@@ -97,16 +94,6 @@ namespace Program_File_Interpreter
                     newPCB.codeSize = Convert.ToInt32(portions[3], 16);
                     newPCB.priority = Convert.ToInt32(portions[4], 16);
                     jobs.Add(newPCB);
-
-#if DEBUG3
-                    string thisJob = "";
-                    thisJob = "100111001".PadRight(15, '0')
-                        + Convert.ToString(newPCB.id, 2).PadLeft(4, '0')
-                        + Convert.ToString(newPCB.codeSize, 2).PadLeft(8, '0') 
-                        + Convert.ToString(newPCB.priority, 2).PadLeft(4, '0');
-                    thisJob.PadLeft(32, '0');
-                    lineList.Add(Convert.ToString(Convert.ToInt32(thisJob, 2), 16));
-#endif
                 }
                 else if (line.StartsWith("// Data"))
                 {
@@ -116,55 +103,15 @@ namespace Program_File_Interpreter
                     newPCB.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
                     newPCB.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
                     data.Add(newPCB);
-
-#if DEBUG3
-                    string thisData = "";
-                    thisData = "1100110011".PadRight(15, '0')
-                        + Convert.ToString(newPCB.state.inputBufferSize, 2).PadLeft(8, '0')
-                        + Convert.ToString(newPCB.state.outputBufferSize, 2).PadLeft(4, '0')
-                        + Convert.ToString(newPCB.state.tempBufferSize, 2).PadLeft(4, '0');
-                    thisData.PadLeft(32, '0');
-                    lineList.Add(Convert.ToString(Convert.ToInt32(thisData, 2), 16));
-#endif
                 }
                 else if (line.StartsWith("// END"))
                 {
-#if DEBUG1
-                    OSMemory.word jobWord = new OSMemory.word();
-                    string thisJob = "";
-                    thisJob = "100111001".PadRight(16, '0');
-                    thisJob += Convert.ToString(newPCB.id, 2).PadLeft(4, '0');
-                    thisJob += Convert.ToString(newPCB.codeSize, 2).PadLeft(8, '0');
-                    thisJob += Convert.ToString(newPCB.priority, 2).PadLeft(4, '0');
-                    thisJob.PadLeft(32, '0');
-                    jobWord.asString = thisJob;
-                    memorySystem.write(jobWord, diskPosition, memorySystem.disk);
-                    memorySystem.bulkWrite(block.GetRange(0, newPCB.codeSize), diskPosition + 1, memorySystem.disk);
-                    diskPosition += newPCB.codeSize + 1;
 
-                    OSMemory.word dataWord = new OSMemory.word();
-                    string thisData = "";
-                    thisData = "1100110011".PadRight(16, '0')
-                        + Convert.ToString(newPCB.state.inputBufferSize, 2).PadLeft(8, '0')
-                        + Convert.ToString(newPCB.state.outputBufferSize, 2).PadLeft(4, '0')
-                        + Convert.ToString(newPCB.state.tempBufferSize, 2).PadLeft(4, '0');
-                    thisData.PadLeft(32, '0');
-                    dataWord.asString = thisData;
-                    memorySystem.write(dataWord, diskPosition, memorySystem.disk);
-                    memorySystem.bulkWrite(block.GetRange(newPCB.codeSize, block.Count - newPCB.codeSize), diskPosition + 1, memorySystem.disk);
-                    diskPosition = diskPosition + 1 + newPCB.state.inputBufferSize + newPCB.state.outputBufferSize + newPCB.state.tempBufferSize;
-                    block = new List<OSMemory.word>();
-#endif
                 }
                 else if (line.Length == 10 && !line.StartsWith("//"))
                 {
                     // Line contains an operation or other data. 
                     lineList.Add(line.Substring(2));
-#if DEBUG1
-                    OSMemory.word thisLine = new OSMemory.word();
-                    thisLine.asInt = Convert.ToInt32(line.Substring(2), 16);
-                    block.Add(thisLine);
-#endif
                 }
 
             }
@@ -260,9 +207,9 @@ namespace Program_File_Interpreter
                 lineList3.Add(addme.ToString());
             }
             postParse.Lines = lineList3.ToArray();
-#if (DEBUG2 || DEBUG3)
+
             memorySystem.writeToDisk(operations);
-#endif
+
             List<string> binaryStringList = new List<string>();
             for(int i = 0; i < memorySystem.disk.Length; i++)
             {

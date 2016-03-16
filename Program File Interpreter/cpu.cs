@@ -8,11 +8,11 @@ namespace Program_File_Interpreter
 {
     class cpu
     {
-        public static void execute(string operation)
+        public static void execute(pcb job)
         {
-            string opcodestr = operation.Substring(2, 6);
-            int opcode = Convert.ToInt16(opcodestr,2);
-            
+            string operation = ""; // Get operation from pcb's current/next line
+            int opcode = Convert.ToInt16(operation.Substring(2, 6), 2);
+
             switch (opcode){
                 case 0x0: // read
                     break;
