@@ -211,12 +211,10 @@ namespace Program_File_Interpreter
             postParse.Lines = lineList3.ToArray();
 
             memorySystem.writeToDisk(operations);
-            for(int i = 0; i < memorySystem.jobs.Count; i++)
-            {
-                cpu.execute(memorySystem, memorySystem.jobs[i]);
-            }
+
             Console.WriteLine("Job 0: ");
-            for (int i = 0; i < memorySystem.jobs[0].memories.operationsEnd; i++)
+            //for (int i = 0; i < memorySystem.jobs[0].memories.operationsEnd; i++)
+            while(memorySystem.jobs[0].programCounter <= memorySystem.jobs[0].memories.operationsEnd)
             {
                 cpu.execute(memorySystem, memorySystem.jobs[0]);
             }

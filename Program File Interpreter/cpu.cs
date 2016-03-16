@@ -140,20 +140,48 @@ namespace Program_File_Interpreter
                 case iSet.WR:
                     whatHappen = "write";
                     break;
+                case iSet.ST:
+                    whatHappen = "store";
+                    break;
+                case iSet.LW:
+                    whatHappen = "lw";
+                    break;
+
+                case iSet.ADDI:
+                    whatHappen = "addI";
+                    break;
+                    
                 case iSet.MOV:
                     whatHappen = "move";
-                    break;
-                case iSet.LDI:
-                    whatHappen = "load";
                     break;
                 case iSet.ADD:
                     whatHappen = "add";
                     break;
+
                 case iSet.MOVI:
                     whatHappen = "moveI";
                     break;
+
+                case iSet.LDI:
+                    whatHappen = "load";
+                    break;
+                case iSet.SLT:
+                    whatHappen = "slt";
+                    break;
+
+                case iSet.HLT:
+                    whatHappen = "halt";
+                    break;
+
+                case iSet.BNE:
+                    whatHappen = "bne";
+                    break;
+
+
+
                 default:
-                    whatHappen = "other: " + opcode.ToString();
+                    // Maybe throw a notImplementedException, if that's the type of error to throw here
+                    whatHappen = "other: 0x" + Convert.ToString(opcode, 16);
                     break;
             }
             job.programCounter++;
