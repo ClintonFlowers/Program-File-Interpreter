@@ -17,6 +17,8 @@ namespace Program_File_Interpreter
 
         public word[] ram = new word[1024];
         public word[] disk = new word[2048];
+        public List<pcb> jobs = new List<pcb>();
+        
 
         public OSMemory()
         {

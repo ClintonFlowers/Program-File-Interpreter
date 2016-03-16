@@ -128,15 +128,37 @@ namespace Program_File_Interpreter
             public const int BLZ = 0x1A;
         }
 
-        public static void execute(pcb job)
+        public static void execute(OSMemory memSys, pcb job)
         {
-            string operation = ""; // Get operation from pcb's current/next line
+            string operation = memSys.disk[job.programCounter].asString; // Get operation from pcb's current/next line
             int opcode = Convert.ToInt16(operation.Substring(2, 6), 2);
-
+            string whatHappen = "";
             switch (opcode){
                 case iSet.RD: // read
+                    whatHappen = "read";
+                    break;
+                case iSet.WR:
+                    whatHappen = "write";
+                    break;
+                case iSet.MOV:
+                    whatHappen = "move";
+                    break;
+                case iSet.LDI:
+                    whatHappen = "load";
+                    break;
+                case iSet.ADD:
+                    whatHappen = "add";
+                    break;
+                case iSet.MOVI:
+                    whatHappen = "moveI";
+                    break;
+                default:
+                    whatHappen = "other: " + opcode.ToString();
                     break;
             }
+            job.programCounter++;
+            
+            Console.WriteLine(whatHappen);
         }
     }
 }

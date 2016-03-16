@@ -63,6 +63,11 @@ namespace Program_File_Interpreter
     }
     class memories
     {
+        // todo: proper memory management with pages and arrays and pointers
+        public int operationsStart;
+        public int operationsEnd;
+        public int dataStart;
+        public int dataEnd;
         // page-table-base, pages, page-size, base-registers, logical/physical map, limit-reg
     }
     class progeny

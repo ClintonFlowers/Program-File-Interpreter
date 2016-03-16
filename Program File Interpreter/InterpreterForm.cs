@@ -30,8 +30,6 @@ namespace Program_File_Interpreter
 
         public List<string> operations = new List<string>();
         private OSMemory memorySystem = new OSMemory();
-        List<pcb> jobs = new List<pcb>();
-        List<pcb> data = new List<pcb>();
 
         public InterpreterForm()
         {
@@ -82,6 +80,7 @@ namespace Program_File_Interpreter
             List<OSMemory.word> block;
             pcb newPCB = new pcb();
             block = new List<OSMemory.word>();
+            int current = 0;
             // Splits "0x" from each and appends to postParse text box
             foreach (string line in preParse.Lines)
             {
@@ -93,7 +92,9 @@ namespace Program_File_Interpreter
                     newPCB.id = Convert.ToInt32(portions[2], 16);
                     newPCB.codeSize = Convert.ToInt32(portions[3], 16);
                     newPCB.priority = Convert.ToInt32(portions[4], 16);
-                    jobs.Add(newPCB);
+                    newPCB.programCounter = current;
+                    newPCB.memories.operationsStart = current;
+                    memorySystem.jobs.Add(newPCB);
                 }
                 else if (line.StartsWith("// Data"))
                 {
@@ -102,18 +103,19 @@ namespace Program_File_Interpreter
                     newPCB.state.inputBufferSize = Convert.ToInt32(dataPortions[2], 16);
                     newPCB.state.outputBufferSize = Convert.ToInt32(dataPortions[3], 16);
                     newPCB.state.tempBufferSize = Convert.ToInt32(dataPortions[4], 16);
-                    data.Add(newPCB);
+
+                    newPCB.memories.operationsEnd = current - 1;
                 }
                 else if (line.StartsWith("// END"))
                 {
-
+                    newPCB.memories.dataEnd = current - 1;
                 }
                 else if (line.Length == 10 && !line.StartsWith("//"))
                 {
                     // Line contains an operation or other data. 
                     lineList.Add(line.Substring(2));
+                    current++;
                 }
-
             }
 
             // Convert each line from hex to binary, parse their meaning, and write to postParse as semi-human-readable instructions
@@ -209,6 +211,15 @@ namespace Program_File_Interpreter
             postParse.Lines = lineList3.ToArray();
 
             memorySystem.writeToDisk(operations);
+            for(int i = 0; i < memorySystem.jobs.Count; i++)
+            {
+                cpu.execute(memorySystem, memorySystem.jobs[i]);
+            }
+            Console.WriteLine("Job 0: ");
+            for (int i = 0; i < memorySystem.jobs[0].memories.operationsEnd; i++)
+            {
+                cpu.execute(memorySystem, memorySystem.jobs[0]);
+            }
 
             List<string> binaryStringList = new List<string>();
             for(int i = 0; i < memorySystem.disk.Length; i++)
